@@ -13,7 +13,7 @@ menu:
 menu_title:
 
 # URL of the Home page image
-index_cover: 'https://imgur.com/a/J4EWR6l'
+index_cover: /img/bg.png
 
 # Default post title
 default_post_title: Untitled
