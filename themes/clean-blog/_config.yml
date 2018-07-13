@@ -1,0 +1,47 @@
+# Header
+menu:
+  Home: /
+  About: /about
+  Archives: /archives
+  # Tags: /tags
+  # Categories: /categories
+  # Github:
+  #   url: https://github.com/RetrieverRobotics/UMBC-Robosub
+  #   icon: github
+
+# Title on top left of menu. Leave empty to use main blog title
+menu_title:
+
+# URL of the Home page image
+index_cover: 'https://imgur.com/a/J4EWR6l'
+
+# Default post title
+default_post_title: Untitled
+
+# Comments. Choose one by filling up the information
+comments:
+  # Disqus comments
+  disqus_shortname:
+  # Facebook comments
+  facebook:
+    appid:
+    comment_count: 
+    comment_colorscheme: 
+
+# Google Analytics Tracking ID
+google_analytics:
+
+# Addthis ID
+addthis:
+
+# set your own favicon
+favicon: /img/favicon.ico
+
+# Social Accounts
+twitter_url:
+twitter_handle:
+facebook_url:
+github_url: https://github.com/RetrieverRobotics/UMBC-Robosub
+gitlab_url:
+linkedin_url:
+mailto: danlee1@umbc.edu
