@@ -18,6 +18,8 @@ index_cover: /img/bg.png
 footer_one: /img/robosub.jpg
 footer_two: /img/rr.jpg
 footer_three: /img/umbc-horizontal-color.jpg
+# URL of sponsors
+sponsor_one: /img/bae-systems.jpg
 
 # Default post title
 default_post_title: Untitled
