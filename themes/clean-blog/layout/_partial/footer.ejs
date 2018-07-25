@@ -1,5 +1,6 @@
 <style>
   li.orgs a img:hover { cursor:pointer !important; }
+  #charmCity:hover { text-decoration:underline; }
 </style>
 <hr />
 
@@ -10,7 +11,7 @@
   <ul class="list-inline text-center">
     <li class="orgs">
       <a href="https://www.baesystems.com/en/home">
-        <img src='<%- theme.sponsor_one %>' alt="baesystems" style="height:90px;width:90px;margin:8px;" />
+        <img src='<%- theme.sponsor_one %>' alt="baesystems" style="height:100px;width:100px;margin:8px;" />
       </a>
     </li>
   </ul>
@@ -19,6 +20,31 @@
 <!-- Footer -->
 <footer>
     <div class="container">
+        <div class="row" style="margin-top:62px;">
+          <ul class="list-inline text-center">
+            <li class="orgs">
+              <a href="http://www.robonation.org/competition/robosub">
+                <img src='<%- theme.footer_one %>' alt="robosub" style="height:90px;width:90px;margin:8px;" />
+              </a>
+            </li>
+            <li class="orgs">
+              <a href="https://www.facebook.com/RetrieverRobotics/">
+                <img src='<%- theme.footer_two %>' alt="retriever robotics" style="height:90px;width:90px;margin:8px;" />
+              </a>
+            </li>
+            <li class="orgs">
+              <a href="https://www.umbc.edu">
+                <img src='<%- theme.footer_three %>' alt="umbc" style="height:90px;margin:8px;" />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <p style="text-align:center;color:black;">
+          Built with  <span style="color: #e25555;padding-left:6px;padding-right:6px;"> &hearts; </span>  and <span class="fa fa-coffee" style="color:#654321;padding-left:6px;padding-right:6px;"></span> in <a href="https://en.wikipedia.org/wiki/Baltimore" id="charmCity" style="text-decoration:none;color:black;padding-left:6px;padding-right:6px;">Charm City.</a>
+        </p>
+
+        <br /><br />
+
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
@@ -94,28 +120,6 @@
 
               </div>
         </div>
-        <div class="row" style="margin-top:62px;">
-          <ul class="list-inline text-center">
-            <li class="orgs">
-              <a href="http://www.robonation.org/competition/robosub">
-                <img src='<%- theme.footer_one %>' alt="robosub" style="height:90px;width:90px;margin:8px;" />
-              </a>
-            </li>
-            <li class="orgs">
-              <a href="https://www.facebook.com/RetrieverRobotics/">
-                <img src='<%- theme.footer_two %>' alt="retriever robotics" style="height:90px;width:90px;margin:8px;" />
-              </a>
-            </li>
-            <li class="orgs">
-              <a href="https://www.umbc.edu">
-                <img src='<%- theme.footer_three %>' alt="umbc" style="height:90px;margin:8px;" />
-              </a>
-            </li>
-          </ul>
-        </div>
-        <p style="text-align:center;color:black;">
-          Built with  <span style="color: #e25555;padding-left:6px;padding-right:6px;"> &hearts; </span>  and <span class="fa fa-coffee" style="color:#654321;padding-left:6px;padding-right:6px;"></span> in <a href="https://en.wikipedia.org/wiki/Baltimore" style="text-decoration:none;color:black;padding-left:6px;padding-right:6px;">Charm City.</a>
-        </p>
 
     </div>
 </footer>
