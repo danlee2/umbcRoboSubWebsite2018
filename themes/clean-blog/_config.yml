@@ -1,8 +1,8 @@
 # Header
 menu:
   Home: /
-  About: /about
-  Archives: /archives
+  # About: /about
+  Blog: /archives
   # Tags: /tags
   # Categories: /categories
   # Github:
@@ -20,6 +20,8 @@ footer_two: /img/rr.jpg
 footer_three: /img/umbc-horizontal-color.jpg
 # URL of sponsors
 sponsor_one: /img/bae-systems.jpg
+# URL of blog header img
+blog_header: /img/North-Campus-at-Night.jpg
 
 # Default post title
 default_post_title: Untitled
