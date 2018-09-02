@@ -3,11 +3,11 @@
 <%
     var cover = item.cover || theme.blog_header;
 %>
-<header class="intro-header" style="background-color:#404040">
+<header class="intro-header" style="background-image: url('<%- theme.post_cover %>');">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
+                <div class="post-heading" style="color:#ffcc00;">
                     <h1><%- item.title || theme.default_post_title || "Untitled" %></h1>
                     <% if (item.subtitle && item.subtitle.length) { %>
                     <h2 class="post-subheading">
