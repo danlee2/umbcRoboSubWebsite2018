@@ -11,7 +11,13 @@ menu:
 
 # Title on top left of menu. Leave empty to use main blog title
 menu_title:
-
+# winner of best first time entry
+winner: /img/winners2.jpg
+party: /img/party.png
+micdrop: /img/micdrop.jpg
+hifive: /img/hifive.png
+# club image
+club: img/club.jpg
 # URL of the Home page image
 index_cover: /img/bg.png
 # URL of Blog Post banner img
@@ -54,4 +60,4 @@ facebook_url:
 github_url: https://github.com/RetrieverRobotics/UMBC-Robosub
 gitlab_url:
 linkedin_url:
-mailto: danlee1@umbc.edu
+mailto: cstrang1@umbc.edu

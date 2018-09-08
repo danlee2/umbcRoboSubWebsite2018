@@ -1,0 +1,36 @@
+<div class="container" style="padding-bottom:32px;border:2px solid black;margin-bottom:22px;">
+  <h3 style="text-align:center;font-size:82px;margin-bottom:38px;">Interested in Joining Us?</h3>
+  <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
+    <h3 style="text-align:center;font-size:82px;color:black;line-height:10rem;">
+      <span style="font-size:100px;">Fridays</span><br />
+      Noon - 1<br />
+      ITE 229
+    </h3>
+  </div>
+  <div class="row" style="margin-top:32px;">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center">
+          <% if (theme.github_url) { %>
+            <li>
+                <a href="<%- theme.github_url%>" target="_blank">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+        <% } %>
+        <% if (theme.mailto) { %>
+          <li>
+              <a href="mailto:<%- theme.mailto%>" target="_blank">
+                  <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                  </span>
+              </a>
+          </li>
+        <% } %>        
+      </ul>
+    </div>
+  </div>
+</div>

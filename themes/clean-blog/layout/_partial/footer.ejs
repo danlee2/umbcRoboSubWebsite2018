@@ -4,7 +4,7 @@
 </style>
 
 <!-- Footer -->
-<footer>
+<footer style="padding-bottom:0px;">
   <div class="container" style="margin-top:100px;">
     <p style="text-align:center;color:black;">
       Built with  <span style="color: #e25555;padding-left:6px;padding-right:6px;"> &hearts; </span>  and <span class="fa fa-coffee" style="color:#654321;padding-left:6px;padding-right:6px;"></span> in <a href="https://en.wikipedia.org/wiki/Baltimore" id="charmCity" style="text-decoration:none;color:black;padding-left:6px;padding-right:6px;">Charm City.</a>
@@ -34,16 +34,7 @@
               </li>
           <% } %>
 
-          <% if (theme.github_url) { %>
-              <li>
-                  <a href="<%- theme.github_url%>" target="_blank">
-                      <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                      </span>
-                  </a>
-              </li>
-          <% } %>
+
 
           <% if (theme.linkedin_url) { %>
               <li>
@@ -56,16 +47,7 @@
               </li>
           <% } %>
 
-          <% if (theme.mailto) { %>
-              <li>
-                  <a href="mailto:<%- theme.mailto%>" target="_blank">
-                      <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
-                      </span>
-                  </a>
-              </li>
-          <% } %>
+
 
           <% if (theme.gitlab_url) { %>
               <li>
