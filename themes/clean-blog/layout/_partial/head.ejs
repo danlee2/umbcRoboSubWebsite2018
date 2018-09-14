@@ -120,4 +120,9 @@
     <link rel="icon" href="<%- theme.favicon %>"/>
     <% } %>
 
+    <!-- preload background images for faster load time  -->
+    <link rel="preload" href="<%- theme.index_cover %>" as="image">
+    <link rel="preload" href="<%- theme.post_cover %>" as="image">
+    <link rel="preload" href="<%- theme.blog_header %>" as="image">
+
 </head>
