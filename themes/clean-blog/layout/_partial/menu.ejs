@@ -14,7 +14,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-left" style="padding-left:12px;">
+            <ul class="nav navbar-nav navbar-left navbar-main" style="padding-left:12px;">
                 <% for (var i in theme.menu){ %>
                     <li>
                         <a href="<%- theme.menu[i].url ? url_for(theme.menu[i].url) : url_for(theme.menu[i]) %>">
