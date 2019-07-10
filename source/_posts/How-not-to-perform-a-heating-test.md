@@ -51,7 +51,7 @@ The purpose of this test is to determine whether thermal limiting will be a sign
 
 ## Data:
 
-{% video <iframe width="560" height="315" src="https://www.youtube.com/embed/PjmJEIpyb-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> %}
+[![PVC Hull Heating Rate](http://i3.ytimg.com/vi/PjmJEIpyb-Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=PjmJEIpyb-Q "PVC Hull Heating Rate")
   
 * X-axis: Ticks, approximately 100 millisecond spacing
 	- 1 Tick = processed 50 sample window, sample spacing is 2 ms
