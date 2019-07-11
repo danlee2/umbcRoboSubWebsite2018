@@ -10,165 +10,7 @@ I just spent a few hours relearning how to write bash scripts to make a simple u
 For those that just want the code, here it is:
 
 ```sh
-#!/bin/bash
-
-printf "\n"
-
-OUT_TEMPLATE='frame%04d.png'
-
-# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
-CLR_PRMT='\033[0;32m'
-CLR_ERR='\033[0;31m'
-CLR_INFO='\033[0;37m'
-CLR_NULL='\033[0m'
-
-ERR_TSFMT="Error: Invalid time format."
-ERR_OPTNA="Error: Option is not available."
-ERR_FILENF="Error: File does not exist."
-ERR_DIRNF="Error: Folder does not exist."
-ERR_CMD="Error: A command needed to run this program is missing!"
-
-print_err() {
-	printf "$CLR_ERR$1$CLR_NULL\n"
-}
-
-print_info() {
-	printf "$CLR_INFO$1$CLR_NULL\n"
-}
-
-prompt() {
-	printf "$CLR_PRMT$1 >> $CLR_NULL"
-}
-
-exit() { # override to add a new line XD
-	printf "\n"
-	if [[ $1 == 0 ]]; then
-		command exit 0
-	else
-		printf "Exiting...\n\n"
-		command exit $1
-	fi
-}
-
-command -v ffmpeg > /dev/null
-if [ $? == 1 ]; then
-	print_err "$ERR_CMD"
-	print_info "Please install 'ffmpeg'."
-	exit 1
-fi
-
-command -v ffprobe > /dev/null
-if [ $? == 1 ]; then
-	print_err "$ERR_CMD"
-	print_info "Please install 'ffprobe'."
-	exit 1
-fi
-
-while [[ $SRC_PATH == "" ]]; do
-	prompt "Enter path of video"; read SRC_PATH
-	if ! [[ -rs $SRC_PATH && ! -d $SRC_PATH ]]; then # file is: readable, size greater than 0
-		print_err "$ERR_FILENF"
-		SRC_PATH=""
-	fi
-done
-
-print_info "Found '$(basename $SRC_PATH)'"
-
-FFMPEG_DUMP=$(ffmpeg -i "$SRC_PATH" -hide_banner 2>&1 | sed '$d') # get info about file and suppress "At least one output file..."
-
-# https://trac.ffmpeg.org/wiki/FFprobeTips
-FRAMERATE=$( echo $FFMPEG_DUMP | sed "s/.*, \(.*\) tbr.*/\1/" )
-DURATION=$( ffprobe -v error -show_entries format=duration -sexagesimal -of default=nw=1:nk=1 $SRC_PATH )
-RESOLUTION=$( ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $SRC_PATH )
-
-prompt "Show complete video info? (y)es/(N)o [3s]"; read -t 3
-if [[ $REPLY == 'y' || $REPLY == 'yes' ]]; then
-	# print complete info
-	print_info "$FFMPEG_DUMP"
-else
-	if ! [[ $REPLY == *'n'* ]]; then printf '\n'; fi # if no reply, then manually move to next line
-	# print summary
-	print_info "$DURATION of $RESOLUTION at $FRAMERATE fps"
-fi
-
-while [[ $DST_PATH == "" ]]; do
-	prompt "Enter folder path for output frames"; read DST_PATH
-	if ! [[ -d $DST_PATH ]]; then
-		print_err "$ERR_DIRNF"
-		DST_PATH=""
-	fi
-done
-
-DST_PATH=$(echo -n "$DST_PATH" | sed 's/\/$//') # strip trailing slash
-print_info "Found '$(basename $DST_PATH)/'"
-
-print_info "\nTime format: [HH:]MM:SS[.m] where .m is decimal seconds and [] indicates an optional term"
-
-while [[ $TS_START == "" ]]; do
-	prompt "Choose timestamp for start (ENTER for 0:00)"; read TS_START
-	if [[ $TS_START == "" ]]; then
-		TS_START="00:00:00"
-	elif ! [[ $TS_START == *':'* ]]; then
-		print_err "$ERR_TSFMT"
-		TS_START=""
-	fi
-done
-
-prompt "Select (e)ndpoint or (d)uration (ENTER for endpoint)"; read END_MODE
-if [[ $END_MODE == 'd' || $END_MODE == 'duration' ]]; then
-	END_MODE='DUR'
-
-	while [[ $TS_DUR == "" ]]; do
-		prompt "Enter a duration (in time format)"; read TS_DUR
-		if ! [[ $TS_DUR == *':'* ]]; then
-			print_err "$ERR_TSFMT"
-			TS_DUR=""
-		fi
-	done
-elif [[ $END_MODE == "" || $END_MODE == 'e' || $END_MODE == 'endpoint' ]]; then
-	END_MODE='POINT'
-
-	while [[ $TS_DONE == "" ]]; do
-		prompt "Choose a timestamp to stop at (ENTER for end)"; read TS_DONE
-		if [[ $TS_DONE == "" ]]; then
-			TS_DONE=$DURATION
-		elif ! [[ $TS_DONE == *':'* ]]; then
-			print_err "$ERR_TSFMT"
-			TS_DONE=""
-		fi
-	done
-fi
-
-while [[ $OUTPUT_RATE == "" ]]; do
-	prompt "Choose an output rate in fps (ENTER for framerate)"; read OUTPUT_RATE
-	if [[ $OUTPUT_RATE == "" ]]; then
-		OUTPUT_RATE=$FRAMERATE
-	fi
-
-done
-
-print_info "Building command..."
-
-# https://www.raymond.cc/blog/extract-video-frames-to-images-using-vlc-media-player/
-# https://trac.ffmpeg.org/wiki/Seeking
-
-# uses -to for both, however without -copyts, the timestamp resets, so -to behaves like a duration
-if [[ $END_MODE == 'POINT' ]]; then
-	CMD="ffmpeg -ss $TS_START -r $OUTPUT_RATE -i $SRC_PATH -to $TS_DONE -copyts $DST_PATH/$OUT_TEMPLATE -hide_banner"
-elif [[ $END_MODE == 'DUR' ]]; then
-	CMD="ffmpeg -ss $TS_START -r $OUTPUT_RATE -i $SRC_PATH -to $TS_DUR $DST_PATH/$OUT_TEMPLATE -hide_banner"
-fi
-
-echo "$CMD" # use echo to prevent printf from interpreting the regex in the output path
-
-prompt "Run this command? (ENTER for yes, anything else to cancel)"; read RUN_CMD
-if [[ $RUN_CMD == "" ]]; then 
-	print_info "Running command..."
-	$CMD
-	exit $?
-fi
-
-exit 2
+#!/bin/bashprintf "\n"OUT_TEMPLATE='frame%04d.png'# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linuxCLR_PRMT='\033[0;32m'CLR_ERR='\033[0;31m'CLR_INFO='\033[0;37m'CLR_NULL='\033[0m'ERR_TSFMT="Error: Invalid time format."ERR_OPTNA="Error: Option is not available."ERR_FILENF="Error: File does not exist."ERR_DIRNF="Error: Folder does not exist."ERR_CMD="Error: A command needed to run this program is missing!"print_err() {	printf "$CLR_ERR$1$CLR_NULL\n"}print_info() {	printf "$CLR_INFO$1$CLR_NULL\n"}prompt() {	printf "$CLR_PRMT$1 >> $CLR_NULL"}exit() { # override to add a new line XD	printf "\n"	if [[ $1 == 0 ]]; then		command exit 0	else		printf "Exiting...\n\n"		command exit $1	fi}command -v ffmpeg > /dev/nullif [ $? == 1 ]; then	print_err "$ERR_CMD"	print_info "Please install 'ffmpeg'."	exit 1ficommand -v ffprobe > /dev/nullif [ $? == 1 ]; then	print_err "$ERR_CMD"	print_info "Please install 'ffprobe'."	exit 1fiwhile [[ $SRC_PATH == "" ]]; do	prompt "Enter full path of video"; read SRC_PATH	if ! [[ -r $SRC_PATH && -s $SRC_PATH && ! -d $SRC_PATH ]]; then 		print_err "$ERR_FILENF"		SRC_PATH=""	fidoneprint_info "Found '$(basename $SRC_PATH)'"FFMPEG_DUMP=$(ffmpeg -i "$SRC_PATH" -hide_banner 2>&1 | sed '$d') # get info about file and suppress "At least one output file..."# https://trac.ffmpeg.org/wiki/FFprobeTipsFRAMERATE=$( echo $FFMPEG_DUMP | sed "s/.*, \(.*\) tbr.*/\1/" )DURATION=$( ffprobe -v error -show_entries format=duration -sexagesimal -of default=nw=1:nk=1 $SRC_PATH )RESOLUTION=$( ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $SRC_PATH )prompt "Show complete video info? (y)es/(N)o [3s]"; read -t 3if [[ $REPLY == 'y' || $REPLY == 'yes' ]]; then	# print complete info	print_info "$FFMPEG_DUMP"else	if ! [[ $REPLY == *'n'* ]]; then printf '\n'; fi # if no reply, then manually move to next line	# print summary	print_info "$DURATION of $RESOLUTION at $FRAMERATE fps"fiwhile [[ $DST_PATH == "" ]]; do	prompt "Enter full folder path for output frames"; read DST_PATH	if ! [[ -d $DST_PATH ]]; then		print_err "$ERR_DIRNF"		DST_PATH=""	fidoneDST_PATH=$(echo -n "$DST_PATH" | sed 's/\/$//') # strip trailing slashprint_info "Found '$(basename $DST_PATH)/'"print_info "\nTime format: [HH:]MM:SS[.m] where .m is decimal seconds and [] indicates an optional term"while [[ $TS_START == "" ]]; do	prompt "Choose timestamp for start (ENTER for 0:00)"; read TS_START	if [[ $TS_START == "" ]]; then		TS_START="00:00:00"	elif ! [[ $TS_START == *':'* ]]; then		print_err "$ERR_TSFMT"		TS_START=""	fidoneprompt "Select (e)ndpoint or (d)uration (ENTER for endpoint)"; read END_MODEif [[ $END_MODE == 'd' || $END_MODE == 'duration' ]]; then	END_MODE='DUR'	while [[ $TS_DUR == "" ]]; do		prompt "Enter a duration (in time format)"; read TS_DUR		if ! [[ $TS_DUR == *':'* ]]; then			print_err "$ERR_TSFMT"			TS_DUR=""		fi	doneelif [[ $END_MODE == "" || $END_MODE == 'e' || $END_MODE == 'endpoint' ]]; then	END_MODE='POINT'	while [[ $TS_DONE == "" ]]; do		prompt "Choose a timestamp to stop at (ENTER for end)"; read TS_DONE		if [[ $TS_DONE == "" ]]; then			TS_DONE=$DURATION		elif ! [[ $TS_DONE == *':'* ]]; then			print_err "$ERR_TSFMT"			TS_DONE=""		fi	donefiwhile [[ $OUTPUT_RATE == "" ]]; do	prompt "Choose an output rate in fps (ENTER for framerate)"; read OUTPUT_RATE	if [[ $OUTPUT_RATE == "" ]]; then		OUTPUT_RATE=$FRAMERATE	fidoneprint_info "Building command..."# https://www.raymond.cc/blog/extract-video-frames-to-images-using-vlc-media-player/# https://trac.ffmpeg.org/wiki/Seeking# uses -to for both, however without -copyts, the timestamp resets, so -to behaves like a durationif [[ $END_MODE == 'POINT' ]]; then	CMD="ffmpeg -ss $TS_START -r $OUTPUT_RATE -i $SRC_PATH -to $TS_DONE -copyts $DST_PATH/$OUT_TEMPLATE -hide_banner"elif [[ $END_MODE == 'DUR' ]]; then	CMD="ffmpeg -ss $TS_START -r $OUTPUT_RATE -i $SRC_PATH -to $TS_DUR $DST_PATH/$OUT_TEMPLATE -hide_banner"fiecho "$CMD" # use echo to prevent printf from interpreting the regex in the output pathprompt "Run this command? (ENTER for yes, anything else to cancel)"; read RUN_CMDif [[ $RUN_CMD == "" ]]; then 	print_info "Running command..."	$CMD	exit $?fiexit 2
 ```
 
 ## Backstory
